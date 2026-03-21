@@ -1,0 +1,95 @@
+-- here we have inserted a table :-  
+
+CREATE DATABASE testdb;
+USE testdb;
+
+CREATE TABLE customers (
+    customerid INT PRIMARY KEY,
+    name VARCHAR(50),
+    city VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    orderid INT PRIMARY KEY,
+    productid INT,
+    pname VARCHAR(50),
+    price DECIMAL(10,2),
+    customerid INT
+);
+
+
+INSERT INTO customers (customerid, name, city) VALUES
+(1, 'Alice', 'New York'),
+(2, 'Bob', 'London'),
+(3, 'Charlie', 'Mumbai'),
+(4, 'Diana', 'Sydney'),
+(5, 'Ethan', 'Toronto');
+
+INSERT INTO orders (orderid, productid, pname, price, customerid) VALUES
+(101, 201, 'Laptop', 800.00, 1),
+(102, 202, 'Mouse', 25.00, 1),
+(103, 203, 'Keyboard', 45.00, 2),
+(104, 204, 'Monitor', 200.00, 2),
+(105, 205, 'Printer', 150.00, 3),
+(106, 206, 'Tablet', 300.00, 3),
+(107, 207, 'Mobile', 500.00, 4),
+(108, 208, 'Headphones', 75.00, 4),
+(109, 209, 'Camera', 600.00, 5),
+(110, 210, 'Speaker', 120.00, 5);
+
+select * from orders;
+select * from customers;
+
+-- order table's -> customer_id is a foreign key
+-- which is connecting to customers table 
+
+-- foreign key refers to the primary key of other table.
+-- in the table if we have duplicate values it is a foreign key and the other one is primary key of that table.
+
+select o.orderid, o.pname, o.customerid from orders as o;
+
+select c.customerid, c.name from customers as c;
+
+-- join:-
+select o.orderid, o.pname, o.customerid,c.customerid, c.name from orders as o
+join customers as c 
+where o.customerid=c.customerid;
+
+
+select * from orders;
+select * from customers;
+
+
+use world;
+select * from country;
+select * from city;
+
+
+-- get the city_id , city_name and the countrycode for the city
+-- get name,continent,population for each country
+-- get the city id, city name, and the countrycode for the each city present in my table
+
+
+SELECT c.id, c.name, c.countrycode, co.name,co.continent,co.population
+FROM city as c
+JOIN country as co
+where c.countrycode = co.code and co.name in ('south africa', 'afghanistan');
+
+
+
+-- you need to find out the countryname and all the language spoken in that country.
+select * from countrylanguage;
+select * from country;
+
+SELECT c.name, cl.language
+FROM country c
+JOIN countrylanguage cl
+where c.code = cl.countrycode and cl.language in ('english','dutch');
+
+
+-- we use **on** when we use the inner join
+
+SELECT c.name, cl.language
+FROM country c
+JOIN countrylanguage cl
+on c.code = cl.countrycode and cl.language in ('english','dutch');
